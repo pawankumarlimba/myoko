@@ -73,7 +73,7 @@ export default function ArtisanCard({ artisan }) {
         <span className='text-sm text-muted-foreground'>
           {artisan.productsCount} products available
         </span>
-        <Link href={`/artisans/${artisan.id}`}>
+        <Link href={`/public/artisans/${artisan.id}`}>
           <Button variant='outline' size='sm'>
             View Profile
           </Button>

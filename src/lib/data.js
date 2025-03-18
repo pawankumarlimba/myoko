@@ -1,4 +1,4 @@
-export const artisans = [
+export var artisans = [
   {
     id: '1',
     name: 'Lakshmi Devi',
@@ -439,7 +439,7 @@ export const artisans = [
   },
 ];
 
-export const categories = [
+export var categories = [
   {
     id: '1',
     name: 'Handwoven Textiles',
@@ -531,9 +531,111 @@ export const categories = [
 ];
 
 // Extend the existing artisans array from your previous code
+export var artisanData = {
+  profileImage: '/images/artisan-profile.jpg',
+  name: 'John Doe',
+  location: 'Mumbai, India',
+  joinedDate: 'Jan 2022',
+  stats: {
+    totalSales: 350,
+    totalEarnings: 125000,
+    pendingOrders: 5,
+    averageRating: 4.7,
+    reviewCount: 120,
+  },
+  recentOrders: [
+    {
+      id: '#ORD123',
+      customer: 'Rahul Sharma',
+      date: 'Mar 12, 2025',
+      total: 4500,
+      items: 3,
+      status: 'Processing',
+    },
+    {
+      id: '#ORD124',
+      customer: 'Ananya Verma',
+      date: 'Mar 10, 2025',
+      total: 2100,
+      items: 1,
+      status: 'Shipped',
+    },
+    {
+      id: '#ORD125',
+      customer: 'Amit Patel',
+      date: 'Mar 9, 2025',
+      total: 7800,
+      items: 5,
+      status: 'Delivered',
+    },
+  ],
+  messages: [
+    {
+      id: 1,
+      customer: 'Rahul Sharma',
+      date: 'Mar 10, 2025',
+      message: 'When will my order be shipped?',
+      read: false,
+    },
+    {
+      id: 2,
+      customer: 'Neha Kapoor',
+      date: 'Mar 8, 2025',
+      message: 'Can I get a discount on bulk orders?',
+      read: true,
+    },
+  ],
+  reviews: [
+    {
+      id: 1,
+      customer: 'Arjun Mehta',
+      product: 'Handmade Pottery',
+      date: 'Mar 5, 2025',
+      rating: 5,
+      comment: 'Excellent quality and craftsmanship!',
+    },
+    {
+      id: 2,
+      customer: 'Simran Kaur',
+      product: 'Wooden Decor',
+      date: 'Mar 3, 2025',
+      rating: 4,
+      comment: 'Loved it, but delivery was slow.',
+    },
+  ],
+  products: [
+    {
+      id: 1,
+      name: 'Handmade Pottery',
+      price: 1500,
+      stock: 12,
+      status: 'Active',
+      sales: 45,
+      image: '/images/product1.jpg',
+    },
+    {
+      id: 2,
+      name: 'Wooden Decor',
+      price: 2500,
+      stock: 5,
+      status: 'Active',
+      sales: 30,
+      image: '/images/product2.jpg',
+    },
+    {
+      id: 3,
+      name: 'Clay Sculptures',
+      price: 3200,
+      stock: 8,
+      status: 'Inactive',
+      sales: 20,
+      image: '/images/product3.jpg',
+    },
+  ],
+};
 
 // Add products array
-export const products = [
+export var products = [
   // Textile Products
   {
     id: 'p1',

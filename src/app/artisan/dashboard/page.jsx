@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Image from 'next/image';
 import {
   Package,
@@ -51,131 +51,10 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
+import axios from 'axios';
+import { artisanData } from '@/lib/data';
 
 // Sample data for the artisan dashboard
-const artisanData = {
-  name: 'Lakshmi Devi',
-  profileImage: '/placeholder.svg?height=100&width=100',
-  location: 'Sualkuchi, Assam',
-  joinedDate: 'January 2023',
-  stats: {
-    totalSales: 156,
-    totalEarnings: 245000,
-    pendingOrders: 8,
-    averageRating: 4.8,
-    reviewCount: 42,
-  },
-  recentOrders: [
-    {
-      id: 'ORD-001',
-      date: 'Mar 15, 2025',
-      customer: 'Rahul Sharma',
-      items: 2,
-      total: 18500,
-      status: 'Processing',
-    },
-    {
-      id: 'ORD-002',
-      date: 'Mar 12, 2025',
-      customer: 'Priya Mehta',
-      items: 1,
-      total: 4500,
-      status: 'Shipped',
-    },
-    {
-      id: 'ORD-003',
-      date: 'Mar 10, 2025',
-      customer: 'Amit Patel',
-      items: 3,
-      total: 21700,
-      status: 'Delivered',
-    },
-    {
-      id: 'ORD-004',
-      date: 'Mar 5, 2025',
-      customer: 'Neha Singh',
-      items: 1,
-      total: 15000,
-      status: 'Delivered',
-    },
-  ],
-  products: [
-    {
-      id: 'p1',
-      name: 'Golden Muga Silk Mekhela Chador with Traditional Motifs',
-      price: 15000,
-      stock: 5,
-      image: '/placeholder.svg?height=60&width=60',
-      status: 'Active',
-      sales: 24,
-    },
-    {
-      id: 'p2',
-      name: 'Muga Silk Stole with Jaapi Motifs',
-      price: 4500,
-      stock: 12,
-      image: '/placeholder.svg?height=60&width=60',
-      status: 'Active',
-      sales: 36,
-    },
-    {
-      id: 'p3',
-      name: 'Pat Silk Gamosa with Tribal Designs',
-      price: 2200,
-      stock: 8,
-      image: '/placeholder.svg?height=60&width=60',
-      status: 'Active',
-      sales: 42,
-    },
-    {
-      id: 'p4',
-      name: 'Handwoven Eri Silk Scarf',
-      price: 3800,
-      stock: 0,
-      image: '/placeholder.svg?height=60&width=60',
-      status: 'Out of Stock',
-      sales: 18,
-    },
-  ],
-  messages: [
-    {
-      id: 'msg1',
-      customer: 'Ananya Das',
-      date: 'Mar 14, 2025',
-      message:
-        "I'm interested in commissioning a custom Mekhela Chador for my wedding. Do you offer custom designs?",
-      read: false,
-    },
-    {
-      id: 'msg2',
-      customer: 'Rajiv Kumar',
-      date: 'Mar 10, 2025',
-      message:
-        "The silk stole arrived today and it's absolutely beautiful! Thank you for the wonderful craftsmanship.",
-      read: true,
-    },
-  ],
-  reviews: [
-    {
-      id: 'rev1',
-      customer: 'Meera Joshi',
-      product: 'Golden Muga Silk Mekhela Chador',
-      date: 'Mar 8, 2025',
-      rating: 5,
-      comment:
-        'Exceptional quality and craftsmanship. The silk has a beautiful luster and the motifs are intricate and stunning.',
-    },
-    {
-      id: 'rev2',
-      customer: 'Vikram Sen',
-      product: 'Pat Silk Gamosa',
-      date: 'Mar 5, 2025',
-      rating: 4,
-      comment:
-        'Beautiful piece with great attention to detail. Shipping was a bit slow but worth the wait.',
-    },
-  ],
-};
 
 export default function ArtisanDashboardPage() {
   const [activeTab, setActiveTab] = useState('overview');
@@ -203,10 +82,6 @@ export default function ArtisanDashboardPage() {
             </div>
 
             <div className='flex gap-3'>
-              <Button variant='outline' className='gap-2'>
-                <Eye className='h-4 w-4' />
-                View Public Profile
-              </Button>
               <Button className='gap-2'>
                 <PlusCircle className='h-4 w-4' />
                 Add New Product
@@ -217,7 +92,7 @@ export default function ArtisanDashboardPage() {
       </div>
 
       {/* Stats Cards */}
-      <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-8'>
+      {/* <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-8'>
         <Card>
           <CardHeader className='flex flex-row items-center justify-between space-y-0 pb-2'>
             <CardTitle className='text-sm font-medium'>Total Sales</CardTitle>
@@ -281,7 +156,7 @@ export default function ArtisanDashboardPage() {
             </p>
           </CardContent>
         </Card>
-      </div>
+      </div> */}
 
       {/* Main Dashboard Content */}
       <Tabs
@@ -959,31 +834,6 @@ export default function ArtisanDashboardPage() {
           </Card>
         </TabsContent>
       </Tabs>
-
-      {/* Help Section */}
-      <div className='mt-8 p-6 bg-muted/30 rounded-lg border'>
-        <div className='flex flex-col md:flex-row items-center gap-6'>
-          <div className='flex-shrink-0'>
-            <div className='h-16 w-16 rounded-full bg-primary/10 flex items-center justify-center'>
-              <HelpCircle className='h-8 w-8 text-primary' />
-            </div>
-          </div>
-          <div className='flex-1 text-center md:text-left'>
-            <h3 className='text-lg font-medium mb-2'>
-              Need Help with Your Artisan Dashboard?
-            </h3>
-            <p className='text-muted-foreground mb-4'>
-              Our support team is available to assist you with any questions
-              about managing your products, orders, or payments. We also offer
-              resources to help you grow your craft business.
-            </p>
-            <div className='flex flex-col sm:flex-row gap-3 justify-center md:justify-start'>
-              <Button variant='outline'>View Tutorial</Button>
-              <Button>Contact Support</Button>
-            </div>
-          </div>
-        </div>
-      </div>
     </div>
   );
 }

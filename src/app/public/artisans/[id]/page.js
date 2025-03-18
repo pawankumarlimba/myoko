@@ -25,17 +25,16 @@ export default function ArtisanProfilePage({ params }) {
 
   return (
     <>
-      <Header />
       <div className='min-h-screen backback'>
         <div className='container mx-auto px-4 py-8'>
           {/* Back Link styled like the home page */}
-          {/* <Link
-            href='/artistian'
+          <Link
+            href='/public/artisan'
             className='inline-flex items-center text-gray-700 hover:text-[#16150A] mb-6'
           >
             <ChevronLeft className='h-4 w-4 mr-1' />
             Back to Artisans
-          </Link> */}
+          </Link>
 
           <div className='grid grid-cols-1 lg:grid-cols-3 gap-8'>
             {/* Left Column: Artisan Info Card */}
