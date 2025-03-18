@@ -59,12 +59,7 @@ const ArtisanList = () => {
             key={index}
             className='w-[20%] md:flex flex-col hidden hover:scale-105 h-[40vh] backsec text-white overflow-hidden border-0'
           >
-            <Link
-              href={
-                '/customer/artisan/' +
-                artisan.name.replace(/\s+/g, '-').toLowerCase()
-              }
-            >
+            <Link href={'/public/artisans/' + (index + 1)}>
               <Image
                 src={artisan.img}
                 alt={artisan.name}
@@ -84,7 +79,7 @@ const ArtisanList = () => {
           <CardTitle className='text-4xl font-bold p-0 forsec'>
             AND MANY MORE ARTISANS
           </CardTitle>
-          <Link href='/customer/artisans'>
+          <Link href='/public/artisans'>
             <div className='h-[8vh] hover:scale-105 w-[100%] flex flex-row justify-between p-2 items-center backsec rounded-[5vh]'>
               <span className='text-white xl:ml-16 lg:ml-10 ml-5 text-nowrap'>
                 EXPLORE

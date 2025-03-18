@@ -65,17 +65,18 @@ const Header = () => {
         <Link href='/'>
           <span className='hover:scale-105 font-bold'>Home</span>
         </Link>
-        <Link href='/artisans'>
+        <Link href='/public/artisans'>
           <span className='hover:scale-105'>Artisans</span>
+        </Link>
+        <Link href='/public/products'>
+          <span className='hover:scale-105'>Categories</span>
         </Link>
         {isAuthenticated ? (
           <>
-            <Link href='/orders'>
+            <Link href='/user/account?section=orders'>
               <span className='hover:scale-105'>Orders</span>
             </Link>
-            <Link href='/cart'>
-              <span className='hover:scale-105'>Cart</span>
-            </Link>
+            <span className='hover:scale-105'>Cart</span>
           </>
         ) : (
           <>
