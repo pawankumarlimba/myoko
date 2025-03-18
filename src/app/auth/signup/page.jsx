@@ -33,6 +33,24 @@ export default function SignUp() {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
 
+  const handleRegister = async (data) => {
+    try {
+      const response = await axios.post('/api/client/signup', data);
+      if (response.data.success) {
+        toast.success(response.data.message);
+        window.location.replace('/');
+      } else {
+        toast.error(response.data.error || 'An error occurred');
+      }
+    } catch (error) {
+      if (error.response && error.response.data && error.response.data.error) {
+        toast.error(error.response.data.error);
+      } else {
+        toast.error('Something went wrong. Please try again.');
+      }
+    }
+  };
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
@@ -55,128 +73,100 @@ export default function SignUp() {
       return;
     }
 
-    try {
-      const response = await axios.post(
-        process.env.DOMAIN + '/api/auth/register',
-        {
-          name: formData.name,
-          email: formData.email,
-          password: formData.password,
-          role: formData.role,
-        },
-        { headers: { 'Content-Type': 'application/json' } }
-      );
-
-      toast.success('Account created successfully! Please sign in.');
-      router.push('/auth/signin?registered=true');
-    } catch (err) {
-      const errorMessage =
-        err.response?.data?.error ||
-        err.response?.data?.message ||
-        err.message ||
-        'Failed to register';
-      setError(errorMessage);
-      toast.error(errorMessage);
-      setIsLoading(false);
-    } finally {
-      setIsLoading(false);
-    }
+    await handleRegister(formData);
+    setIsLoading(false);
   };
 
   return (
-    <div className='flex min-h-screen items-center justify-center px-4 py-12'>
-      <Card className='w-full max-w-md'>
-        <CardHeader className='space-y-1'>
-          <CardTitle className='text-2xl font-bold'>
-            Create an account
-          </CardTitle>
-          <CardDescription>
-            Enter your information to create an account
-          </CardDescription>
+    <div className="flex min-h-screen items-center justify-center px-4 py-12">
+      <Card className="w-full max-w-md">
+        <CardHeader className="space-y-1">
+          <CardTitle className="text-2xl font-bold">Create an account</CardTitle>
+          <CardDescription>Enter your information to create an account</CardDescription>
         </CardHeader>
         <CardContent>
           {error && (
-            <Alert variant='destructive'>
-              <AlertCircle className='h-4 w-4' />
+            <Alert variant="destructive">
+              <AlertCircle className="h-4 w-4" />
               <AlertDescription>{error}</AlertDescription>
             </Alert>
           )}
-          <form onSubmit={handleSubmit} className='space-y-4'>
-            <div className='space-y-2'>
-              <Label htmlFor='name'>Name</Label>
+          <form onSubmit={handleSubmit} className="space-y-4">
+            <div className="space-y-2">
+              <Label htmlFor="name">Name</Label>
               <Input
-                id='name'
-                name='name'
-                placeholder='John Doe'
+                id="name"
+                name="name"
+                placeholder="John Doe"
                 value={formData.name}
                 onChange={handleChange}
                 required
               />
             </div>
-            <div className='space-y-2'>
-              <Label htmlFor='email'>Email</Label>
+            <div className="space-y-2">
+              <Label htmlFor="email">Email</Label>
               <Input
-                id='email'
-                name='email'
-                type='email'
-                placeholder='name@example.com'
+                id="email"
+                name="email"
+                type="email"
+                placeholder="name@example.com"
                 value={formData.email}
                 onChange={handleChange}
                 required
               />
             </div>
-            <div className='space-y-2'>
-              <Label htmlFor='password'>Password</Label>
+            <div className="space-y-2">
+              <Label htmlFor="password">Password</Label>
               <Input
-                id='password'
-                name='password'
-                type='password'
+                id="password"
+                name="password"
+                type="password"
                 value={formData.password}
                 onChange={handleChange}
                 required
               />
             </div>
-            <div className='space-y-2'>
-              <Label htmlFor='confirmPassword'>Confirm Password</Label>
+            <div className="space-y-2">
+              <Label htmlFor="confirmPassword">Confirm Password</Label>
               <Input
-                id='confirmPassword'
-                name='confirmPassword'
-                type='password'
+                id="confirmPassword"
+                name="confirmPassword"
+                type="password"
                 value={formData.confirmPassword}
                 onChange={handleChange}
                 required
               />
             </div>
-            <div className='space-y-2'>
+            <div className="space-y-2">
               <Label>Account Type</Label>
               <RadioGroup
                 value={formData.role}
                 onValueChange={handleRoleChange}
-                className='flex flex-col space-y-1'
+                className="flex flex-col space-y-1"
               >
-                <div className='flex items-center space-x-2'>
-                  <RadioGroupItem value='user' id='user' />
-                  <Label htmlFor='user'>Customer</Label>
+                <div className="flex items-center space-x-2">
+                  <RadioGroupItem value="user" id="user" />
+                  <Label htmlFor="user">Customer</Label>
                 </div>
-                <div className='flex items-center space-x-2'>
-                  <RadioGroupItem value='artisan' id='artisan' />
-                  <Label htmlFor='artisan'>Artisan</Label>
+                <div className="flex items-center space-x-2">
+                  <RadioGroupItem value="artisan" id="artisan" />
+                  <Label htmlFor="artisan">Artisan</Label>
                 </div>
               </RadioGroup>
             </div>
             <Button
-              type='submit'
-              className='w-full text-black backsec'
+              type="submit"
+              className="w-full text-black backsec"
               disabled={isLoading}
             >
               {isLoading ? 'Creating account...' : 'Create account'}
             </Button>
           </form>
         </CardContent>
-        <CardFooter className='flex flex-col space-y-4'>
-          <div className='text-center text-sm'>
+        <CardFooter className="flex flex-col space-y-4">
+          <div className="text-center text-sm">
             Already have an account?{' '}
-            <Link href='/auth/signin' className='text-primary hover:underline'>
+            <Link href="/auth/signin" className="text-primary hover:underline">
               Sign in
             </Link>
           </div>
